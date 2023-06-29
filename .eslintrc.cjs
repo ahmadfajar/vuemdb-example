@@ -1,5 +1,5 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
@@ -13,9 +13,9 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    "@typescript-eslint/ban-ts-comment": "off",
-    "constructor-super": "error",
-    "eol-last": "warn",
-    "guard-for-in": "warn"
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'constructor-super': 'error',
+    'eol-last': 'warn',
+    'guard-for-in': 'warn',
   }
-}
+};

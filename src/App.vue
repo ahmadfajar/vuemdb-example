@@ -1,85 +1,163 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue';
+import { useBreakpointMax } from 'vue-mdbootstrap';
+import type { TNavigationRecord } from '@/router/navigation';
+import { menuNavs } from '@/router/navigation';
+
+const openSideDrawer = ref(true);
+
+function onContainerResize() {
+  if (useBreakpointMax('xl')) {
+    openSideDrawer.value = false;
+  }
+}
+
+function toggleSideDrawer(value: boolean) {
+  openSideDrawer.value = value;
+}
+
+function compareFn(a: TNavigationRecord, b: TNavigationRecord) {
+  const labelA = a.label.toUpperCase();
+  const labelB = b.label.toUpperCase();
+  if (labelA < labelB) {
+    return -1;
+  }
+  if (labelA > labelB) {
+    return 1;
+  }
+  // label is equal
+  return 0;
+}
+
+const routeNavA = menuNavs.filter((it) => it.group === 'Components').sort(compareFn);
+const routeNavB = menuNavs.filter((it) => it.group === 'Reference').sort(compareFn);
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <BsAppContainer class="bg-special-color" viewport-height>
+    <BsAppbar class="bg-special-color" clipped-left>
+      <BsButton
+        color="light"
+        icon="menu"
+        mode="icon"
+        flat
+        @click="toggleSideDrawer(!openSideDrawer)"
+      />
+      <BsAppbarTitle :title="($route.meta.title as string)" class="text-white" />
+    </BsAppbar>
+    <BsSideDrawer v-model:open="openSideDrawer" color="special-color" fixed-layout>
+      <div class="text-center mb-2">
+        <img alt="Vue logo" src="./assets/vue-mdb.png" style="width: 96px" />
+      </div>
+      <BsDivider dark />
+      <BsListView color="special-color" item-border-variant="left" item-rounded space-around="both">
+        <BsListNav>
+          <BsListNavItem
+            v-for="navItem in routeNavA"
+            :key="navItem.label"
+            :path="navItem.path"
+            :disabled="navItem.disabled"
+            :label="navItem.label"
+          />
+        </BsListNav>
+        <BsDivider class="my-2" />
+        <BsListNav>
+          <BsListNavItem
+            v-for="navItem in routeNavB"
+            :key="navItem.label"
+            :path="navItem.path"
+            :disabled="navItem.disabled"
+            :label="navItem.label"
+          />
+        </BsListNav>
+      </BsListView>
+    </BsSideDrawer>
+    <BsContainer app class="y-overflow-hidden" @resize="onContainerResize">
+      <div class="body-content">
+        <RouterView v-slot="{ Component }">
+          <Transition name="fastFade" mode="out-in">
+            <component :is="Component" />
+          </Transition>
+        </RouterView>
+      </div>
+    </BsContainer>
+  </BsAppContainer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style lang="scss">
+@import 'compass-mixins/lib/compass/css3';
+
+.fastFade-enter-active,
+.fastFade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fastFade-enter-from,
+.fastFade-leave-to {
+  opacity: 0;
+}
+
+#app {
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  max-width: 100%;
   max-height: 100vh;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .md-container-wrap {
+    height: calc(100vh - 64px);
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .body-content {
+    background-color: white;
+    padding-bottom: 2rem;
+    position: relative;
+    overflow: auto;
+    width: 100%;
+
+    @media (min-width: 992px) {
+      @include border-top-left-radius(36px);
+    }
+  }
+}
+
+.docs-body {
+  padding-top: 3rem;
+
+  > h2 {
+    font-weight: 400;
   }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .h3,
+  .h4,
+  h3,
+  h4 {
+    &:not(.card-title) {
+      font-weight: normal;
+    }
   }
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+  @media (min-width: 1200px) {
+    max-width: 1080px;
+  }
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+  @media (min-width: 1480px) {
+    padding-left: 2rem;
+  }
+
+  .card {
+    &.mobi-card {
+      --bs-card-border-radius: 0.375rem;
+      --bs-card-inner-border-radius: calc(0.375rem - 1px);
+      max-width: 400px;
+    }
+
+    &.rounded-sm {
+      --bs-card-border-radius: 0.375rem;
+      --bs-card-inner-border-radius: calc(0.375rem - 1px);
+    }
+
+    > .md-appbar:first-child {
+      @include border-top-radius(var(--bs-card-border-radius));
+    }
   }
 }
 </style>

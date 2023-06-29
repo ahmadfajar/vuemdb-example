@@ -1,6 +1,6 @@
 # vuemdb-example
 
-This template should help get you started developing with Vue 3 in Vite.
+This repository contains examples on how to use the Vue MDBootstrap v2.0 components.
 
 ## Recommended IDE Setup
 
@@ -24,23 +24,39 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
+# with npm
 npm install
+
+# with yarn
+yarn install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
+# with npm
 npm run dev
+
+# with yarn
+yarn dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
+# with npm
 npm run build
+
+# with yarn
+yarn build
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
+# with npm
 npm run lint
+
+# with yarn
+yarn lint
 ```
