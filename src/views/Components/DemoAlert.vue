@@ -70,13 +70,13 @@
     <h2 class="mt-5">Additional content inside alerts</h2>
     <DemoBlock class="mt-3">
       <BsAlert filled variant="success">
-        <h5>Well done!</h5>
+        <h5 class="mt-2">Well done!</h5>
         <p>
           Aww yeah, you successfully read this important alert message. This is an example how to
           construct <b>Alerts</b> from other predefined colors.
         </p>
         <hr />
-        <p class="mb-0">
+        <p>
           Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
         </p>
       </BsAlert>
