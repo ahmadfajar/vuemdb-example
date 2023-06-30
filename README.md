@@ -1,4 +1,4 @@
-# vuemdb-example
+# Vue MDBootstrap Example
 
 This repository contains examples on how to use the Vue MDBootstrap v2.0 components.
 
@@ -49,14 +49,4 @@ npm run build
 
 # with yarn
 yarn build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-# with npm
-npm run lint
-
-# with yarn
-yarn lint
 ```
