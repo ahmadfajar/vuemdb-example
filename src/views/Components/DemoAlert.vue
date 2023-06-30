@@ -55,14 +55,14 @@
         {{ content }} alert with <span class="md-fw-semibold">custom Icon</span>.
       </BsAlert>
       <BsAlert color="deep-purple">
-        <template #alertIcon>
+        <template #alert-icon>
           <icon-circle-nodes class="md-spin" />
         </template>
         {{ content }} alert with <span class="md-fw-semibold">custom Icon</span>.
       </BsAlert>
       <BsAlert color="blue">
         {{ content }} alert with <span class="md-fw-semibold">custom Icon</span>.
-        <template #alertIcon>
+        <template #alert-icon>
           <icon-bullhorn />
         </template>
       </BsAlert>
@@ -75,7 +75,7 @@
           Aww yeah, you successfully read this important alert message. This is an example how to
           construct <b>Alerts</b> from other predefined colors.
         </p>
-        <hr />
+        <BsDivider class="my-2"/>
         <p>
           Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
         </p>
